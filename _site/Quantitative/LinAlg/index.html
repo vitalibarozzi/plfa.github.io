@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quantitative: Relation to Linear Algebra | Programming Language Foundations in Agda
+</title><!-- Begin Jekyll SEO tag v2.5.0 -->
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Quantitative: Relation to Linear Algebra" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Programming Language Foundations in Agda" />
+<meta property="og:description" content="Programming Language Foundations in Agda" />
+<link rel="canonical" href="https://plfa.ed.inf.ac.uk/Quantitative/LinAlg/" />
+<meta property="og:url" content="https://plfa.ed.inf.ac.uk/Quantitative/LinAlg/" />
+<meta property="og:site_name" content="Programming Language Foundations in Agda" />
+<script type="application/ld+json">
+{"description":"Programming Language Foundations in Agda","@type":"WebPage","url":"https://plfa.ed.inf.ac.uk/Quantitative/LinAlg/","headline":"Quantitative: Relation to Linear Algebra","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://plfa.ed.inf.ac.uk/feed.xml" title="Programming Language Foundations in Agda
+" /></head>
+<body><header class="site-header" role="banner">
+
+    <div class="wrapper">
+
+        <a class="site-title" href="/">Programming Language Foundations in Agda
+</a>
+
+        <nav class="site-nav">
+            <span class="menu-icon">
+                <svg viewBox="0 0 18 15" width="18px" height="15px">
+                    <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                    <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                    <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                </svg>
+            </span>
+
+            <div class="trigger">
+                <a class="page-link" href="/">Table of Contents</a>
+                <a class="page-link" href="/about/">About</a>
+            </div>
+        </nav>
+
+    </div>
+
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+      <h1 class="post-title">Quantitative: Relation to Linear Algebra</h1>
+  </header>
+
+  <p style="text-align:center;">
+    
+    
+    <a alt="Source code" href="https://github.com/plfa/plfa.github.io/blob/dev/src/plfa/Quantitative/LinAlg.lagda">Source</a>
+    
+    
+</p>
+
+
+  <div class="post-content">
+    <pre class="Agda"><a id="129" class="Keyword">open</a> <a id="134" class="Keyword">import</a> <a id="141" href="https://agda.github.io/agda-stdlib/Relation.Binary.PropositionalEquality.html" class="Module">Relation.Binary.PropositionalEquality</a> <a id="179" class="Symbol">as</a> <a id="182" class="Module">Eq</a> <a id="185" class="Keyword">using</a> <a id="191" class="Symbol">(</a><a id="192" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#83" class="Datatype Operator">_≡_</a><a id="195" class="Symbol">)</a>
+<a id="197" class="Keyword">open</a> <a id="202" class="Keyword">import</a> <a id="209" href="https://agda.github.io/agda-stdlib/Algebra.Structures.html" class="Module">Algebra.Structures</a> <a id="228" class="Keyword">using</a> <a id="234" class="Symbol">(</a><a id="235" class="Keyword">module</a> <a id="242" href="https://agda.github.io/agda-stdlib/Algebra.Structures.html#6239" class="Module">IsSemiring</a><a id="252" class="Symbol">;</a> <a id="254" href="https://agda.github.io/agda-stdlib/Algebra.Structures.html#6239" class="Record">IsSemiring</a><a id="264" class="Symbol">)</a></pre>
+
+<pre class="Agda"><a id="291" class="Keyword">module</a> <a id="298" href="/Quantitative/LinAlg/" class="Module">plfa.Quantitative.LinAlg</a>
+  <a id="325" class="Symbol">{</a><a id="326" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a> <a id="331" class="Symbol">:</a> <a id="333" class="PrimitiveType">Set</a><a id="336" class="Symbol">}</a>
+  <a id="340" class="Symbol">(</a><a id="341" href="/Quantitative/LinAlg/#341" class="Bound Operator">_+_</a> <a id="345" href="/Quantitative/LinAlg/#345" class="Bound Operator">_*_</a> <a id="349" class="Symbol">:</a> <a id="351" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a> <a id="356" class="Symbol">→</a> <a id="358" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a> <a id="363" class="Symbol">→</a> <a id="365" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a><a id="369" class="Symbol">)</a>
+  <a id="373" class="Symbol">(</a><a id="374" href="/Quantitative/LinAlg/#374" class="Bound">0#</a> <a id="377" href="/Quantitative/LinAlg/#377" class="Bound">1#</a> <a id="380" class="Symbol">:</a> <a id="382" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a><a id="386" class="Symbol">)</a>
+  <a id="390" class="Symbol">(</a><a id="391" href="/Quantitative/LinAlg/#391" class="Bound">*-+-isSemiring</a> <a id="406" class="Symbol">:</a> <a id="408" href="https://agda.github.io/agda-stdlib/Algebra.Structures.html#6239" class="Record">IsSemiring</a> <a id="419" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Equality.html#83" class="Datatype Operator">_≡_</a> <a id="423" href="/Quantitative/LinAlg/#341" class="Bound Operator">_+_</a> <a id="427" href="/Quantitative/LinAlg/#345" class="Bound Operator">_*_</a> <a id="431" href="/Quantitative/LinAlg/#374" class="Bound">0#</a> <a id="434" href="/Quantitative/LinAlg/#377" class="Bound">1#</a><a id="436" class="Symbol">)</a>
+  <a id="440" class="Keyword">where</a></pre>
+
+<pre class="Agda"><a id="471" class="Keyword">open</a> <a id="476" class="Keyword">import</a> <a id="483" href="/Quantitative/" class="Module">plfa.Quantitative</a> <a id="501" href="/Quantitative/LinAlg/#341" class="Bound Operator">_+_</a> <a id="505" href="/Quantitative/LinAlg/#345" class="Bound Operator">_*_</a> <a id="509" href="/Quantitative/LinAlg/#374" class="Bound">0#</a> <a id="512" href="/Quantitative/LinAlg/#377" class="Bound">1#</a> <a id="515" href="/Quantitative/LinAlg/#391" class="Bound">*-+-isSemiring</a>
+<a id="530" class="Keyword">open</a> <a id="535" class="Keyword">import</a> <a id="542" href="https://agda.github.io/agda-stdlib/Function.html" class="Module">Function</a> <a id="551" class="Keyword">using</a> <a id="557" class="Symbol">(</a><a id="558" href="https://agda.github.io/agda-stdlib/Function.html#769" class="Function Operator">_∘_</a><a id="561" class="Symbol">)</a>
+<a id="563" class="Keyword">open</a> <a id="568" class="Keyword">import</a> <a id="575" href="https://agda.github.io/agda-stdlib/Data.Nat.html" class="Module">Data.Nat</a> <a id="584" class="Keyword">using</a> <a id="590" class="Symbol">(</a><a id="591" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#97" class="Datatype">ℕ</a><a id="592" class="Symbol">;</a> <a id="594" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor">suc</a><a id="597" class="Symbol">;</a> <a id="599" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#115" class="InductiveConstructor">zero</a><a id="603" class="Symbol">)</a>
+<a id="605" class="Keyword">open</a> <a id="610" class="Keyword">import</a> <a id="617" href="https://agda.github.io/agda-stdlib/Data.Fin.html" class="Module">Data.Fin</a> <a id="626" class="Keyword">using</a> <a id="632" class="Symbol">(</a><a id="633" href="https://agda.github.io/agda-stdlib/Data.Fin.html#910" class="Datatype">Fin</a><a id="636" class="Symbol">;</a> <a id="638" href="https://agda.github.io/agda-stdlib/Data.Fin.html#963" class="InductiveConstructor">suc</a><a id="641" class="Symbol">;</a> <a id="643" href="https://agda.github.io/agda-stdlib/Data.Fin.html#932" class="InductiveConstructor">zero</a><a id="647" class="Symbol">)</a>
+<a id="649" class="Keyword">open</a> <a id="654" class="Keyword">import</a> <a id="661" href="https://agda.github.io/agda-stdlib/Data.Vec.html" class="Module">Data.Vec</a> <a id="670" class="Keyword">using</a> <a id="676" class="Symbol">(</a><a id="677" href="https://agda.github.io/agda-stdlib/Data.Vec.html#672" class="Datatype">Vec</a><a id="680" class="Symbol">;</a> <a id="682" href="https://agda.github.io/agda-stdlib/Data.Vec.html#731" class="InductiveConstructor Operator">_∷_</a><a id="685" class="Symbol">;</a> <a id="687" href="https://agda.github.io/agda-stdlib/Data.Vec.html#712" class="InductiveConstructor">[]</a><a id="689" class="Symbol">)</a></pre>
+
+<pre class="Agda"><a id="∥_∥ℕ"></a><a id="716" href="/Quantitative/LinAlg/#716" class="Function Operator">∥_∥ℕ</a> <a id="721" class="Symbol">:</a> <a id="723" href="/Quantitative/#893" class="Datatype">Precontext</a> <a id="734" class="Symbol">→</a> <a id="736" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#97" class="Datatype">ℕ</a>
+<a id="738" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="740" href="/Quantitative/#918" class="InductiveConstructor">∅</a>     <a id="746" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a> <a id="749" class="Symbol">=</a> <a id="751" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#115" class="InductiveConstructor">zero</a>
+<a id="756" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="758" href="/Quantitative/LinAlg/#758" class="Bound">γ</a> <a id="760" href="/Quantitative/#937" class="InductiveConstructor Operator">,</a> <a id="762" class="Symbol">_</a> <a id="764" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a> <a id="767" class="Symbol">=</a> <a id="769" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#128" class="InductiveConstructor">suc</a> <a id="773" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="775" href="/Quantitative/LinAlg/#758" class="Bound">γ</a> <a id="777" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a></pre>
+
+<pre class="Agda"><a id="∥_∥Fin"></a><a id="805" href="/Quantitative/LinAlg/#805" class="Function Operator">∥_∥Fin</a> <a id="812" class="Symbol">:</a> <a id="814" class="Symbol">∀</a> <a id="816" class="Symbol">{</a><a id="817" href="/Quantitative/LinAlg/#817" class="Bound">γ</a><a id="818" class="Symbol">}</a> <a id="820" class="Symbol">{</a><a id="821" href="/Quantitative/LinAlg/#821" class="Bound">A</a><a id="822" class="Symbol">}</a> <a id="824" class="Symbol">→</a> <a id="826" href="/Quantitative/LinAlg/#817" class="Bound">γ</a> <a id="828" href="/Quantitative/#1073" class="Datatype Operator">∋</a> <a id="830" href="/Quantitative/LinAlg/#821" class="Bound">A</a> <a id="832" class="Symbol">→</a> <a id="834" href="https://agda.github.io/agda-stdlib/Data.Fin.html#910" class="Datatype">Fin</a> <a id="838" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="840" href="/Quantitative/LinAlg/#817" class="Bound">γ</a> <a id="842" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a>
+<a id="845" href="/Quantitative/LinAlg/#805" class="Function Operator">∥</a> <a id="847" href="/Quantitative/#1112" class="InductiveConstructor">Z</a>   <a id="851" href="/Quantitative/LinAlg/#805" class="Function Operator">∥Fin</a> <a id="856" class="Symbol">=</a> <a id="858" href="https://agda.github.io/agda-stdlib/Data.Fin.html#932" class="InductiveConstructor">zero</a>
+<a id="863" href="/Quantitative/LinAlg/#805" class="Function Operator">∥</a> <a id="865" href="/Quantitative/#1165" class="InductiveConstructor Operator">S</a> <a id="867" href="/Quantitative/LinAlg/#867" class="Bound">x</a> <a id="869" href="/Quantitative/LinAlg/#805" class="Function Operator">∥Fin</a> <a id="874" class="Symbol">=</a> <a id="876" href="https://agda.github.io/agda-stdlib/Data.Fin.html#963" class="InductiveConstructor">suc</a> <a id="880" href="/Quantitative/LinAlg/#805" class="Function Operator">∥</a> <a id="882" href="/Quantitative/LinAlg/#867" class="Bound">x</a> <a id="884" href="/Quantitative/LinAlg/#805" class="Function Operator">∥Fin</a></pre>
+
+<pre class="Agda"><a id="∥_∥Vec"></a><a id="914" href="/Quantitative/LinAlg/#914" class="Function Operator">∥_∥Vec</a> <a id="921" class="Symbol">:</a> <a id="923" class="Symbol">∀</a> <a id="925" class="Symbol">{</a><a id="926" href="/Quantitative/LinAlg/#926" class="Bound">γ</a><a id="927" class="Symbol">}</a> <a id="929" class="Symbol">→</a> <a id="931" href="/Quantitative/#1260" class="Datatype">Context</a> <a id="939" href="/Quantitative/LinAlg/#926" class="Bound">γ</a> <a id="941" class="Symbol">→</a> <a id="943" href="https://agda.github.io/agda-stdlib/Data.Vec.html#672" class="Datatype">Vec</a> <a id="947" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a> <a id="952" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="954" href="/Quantitative/LinAlg/#926" class="Bound">γ</a> <a id="956" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a>
+<a id="959" href="/Quantitative/LinAlg/#914" class="Function Operator">∥</a> <a id="961" href="/Quantitative/#1295" class="InductiveConstructor">∅</a>         <a id="971" href="/Quantitative/LinAlg/#914" class="Function Operator">∥Vec</a> <a id="976" class="Symbol">=</a> <a id="978" href="https://agda.github.io/agda-stdlib/Data.Vec.html#712" class="InductiveConstructor">[]</a>
+<a id="981" href="/Quantitative/LinAlg/#914" class="Function Operator">∥</a> <a id="983" href="/Quantitative/LinAlg/#983" class="Bound">Γ</a> <a id="985" href="/Quantitative/#1315" class="InductiveConstructor Operator">,</a> <a id="987" href="/Quantitative/LinAlg/#987" class="Bound">π</a> <a id="989" href="/Quantitative/#1315" class="InductiveConstructor Operator">∙</a> <a id="991" class="Symbol">_</a> <a id="993" href="/Quantitative/LinAlg/#914" class="Function Operator">∥Vec</a> <a id="998" class="Symbol">=</a> <a id="1000" href="/Quantitative/LinAlg/#987" class="Bound">π</a> <a id="1002" href="https://agda.github.io/agda-stdlib/Data.Vec.html#731" class="InductiveConstructor Operator">∷</a> <a id="1004" href="/Quantitative/LinAlg/#914" class="Function Operator">∥</a> <a id="1006" href="/Quantitative/LinAlg/#983" class="Bound">Γ</a> <a id="1008" href="/Quantitative/LinAlg/#914" class="Function Operator">∥Vec</a></pre>
+
+<pre class="Agda"><a id="Mat"></a><a id="1038" href="/Quantitative/LinAlg/#1038" class="Function">Mat</a> <a id="1042" class="Symbol">:</a> <a id="1044" class="PrimitiveType">Set</a> <a id="1048" class="Symbol">→</a> <a id="1050" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#97" class="Datatype">ℕ</a> <a id="1052" class="Symbol">→</a> <a id="1054" href="https://agda.github.io/agda-stdlib/Agda.Builtin.Nat.html#97" class="Datatype">ℕ</a> <a id="1056" class="Symbol">→</a> <a id="1058" class="PrimitiveType">Set</a>
+<a id="1062" href="/Quantitative/LinAlg/#1038" class="Function">Mat</a> <a id="1066" href="/Quantitative/LinAlg/#1066" class="Bound">A</a> <a id="1068" href="/Quantitative/LinAlg/#1068" class="Bound">n</a> <a id="1070" href="/Quantitative/LinAlg/#1070" class="Bound">m</a> <a id="1072" class="Symbol">=</a> <a id="1074" href="https://agda.github.io/agda-stdlib/Data.Vec.html#672" class="Datatype">Vec</a> <a id="1078" class="Symbol">(</a><a id="1079" href="https://agda.github.io/agda-stdlib/Data.Vec.html#672" class="Datatype">Vec</a> <a id="1083" href="/Quantitative/LinAlg/#1066" class="Bound">A</a> <a id="1085" href="/Quantitative/LinAlg/#1070" class="Bound">m</a><a id="1086" class="Symbol">)</a> <a id="1088" href="/Quantitative/LinAlg/#1068" class="Bound">n</a></pre>
+
+<pre class="Agda"><a id="∥_∥Mat"></a><a id="1115" href="/Quantitative/LinAlg/#1115" class="Function Operator">∥_∥Mat</a> <a id="1122" class="Symbol">:</a> <a id="1124" class="Symbol">∀</a> <a id="1126" class="Symbol">{</a><a id="1127" href="/Quantitative/LinAlg/#1127" class="Bound">γ</a> <a id="1129" href="/Quantitative/LinAlg/#1129" class="Bound">δ</a><a id="1130" class="Symbol">}</a> <a id="1132" class="Symbol">→</a> <a id="1134" href="/Quantitative/#5473" class="Function">Matrix</a> <a id="1141" href="/Quantitative/LinAlg/#1127" class="Bound">γ</a> <a id="1143" href="/Quantitative/LinAlg/#1129" class="Bound">δ</a> <a id="1145" class="Symbol">→</a> <a id="1147" href="/Quantitative/LinAlg/#1038" class="Function">Mat</a> <a id="1151" href="/Quantitative/LinAlg/#326" class="Bound">Mult</a> <a id="1156" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="1158" href="/Quantitative/LinAlg/#1127" class="Bound">γ</a> <a id="1160" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a> <a id="1163" href="/Quantitative/LinAlg/#716" class="Function Operator">∥</a> <a id="1165" href="/Quantitative/LinAlg/#1129" class="Bound">δ</a> <a id="1167" href="/Quantitative/LinAlg/#716" class="Function Operator">∥ℕ</a>
+<a id="1170" href="/Quantitative/LinAlg/#1115" class="Function Operator">∥_∥Mat</a> <a id="1177" class="Symbol">{</a><a id="1178" href="/Quantitative/#918" class="InductiveConstructor">∅</a><a id="1179" class="Symbol">}</a>     <a id="1185" class="Symbol">{</a><a id="1186" href="/Quantitative/LinAlg/#1186" class="Bound">δ</a><a id="1187" class="Symbol">}</a> <a id="1189" href="/Quantitative/LinAlg/#1189" class="Bound">Δ</a> <a id="1191" class="Symbol">=</a> <a id="1193" href="https://agda.github.io/agda-stdlib/Data.Vec.html#712" class="InductiveConstructor">[]</a>
+<a id="1196" href="/Quantitative/LinAlg/#1115" class="Function Operator">∥_∥Mat</a> <a id="1203" class="Symbol">{</a><a id="1204" href="/Quantitative/LinAlg/#1204" class="Bound">γ</a> <a id="1206" href="/Quantitative/#937" class="InductiveConstructor Operator">,</a> <a id="1208" class="Symbol">_}</a> <a id="1211" class="Symbol">{</a><a id="1212" href="/Quantitative/LinAlg/#1212" class="Bound">δ</a><a id="1213" class="Symbol">}</a> <a id="1215" href="/Quantitative/LinAlg/#1215" class="Bound">Δ</a> <a id="1217" class="Symbol">=</a> <a id="1219" href="/Quantitative/LinAlg/#914" class="Function Operator">∥</a> <a id="1221" href="/Quantitative/LinAlg/#1215" class="Bound">Δ</a> <a id="1223" href="/Quantitative/#1112" class="InductiveConstructor">Z</a> <a id="1225" href="/Quantitative/LinAlg/#914" class="Function Operator">∥Vec</a> <a id="1230" href="https://agda.github.io/agda-stdlib/Data.Vec.html#731" class="InductiveConstructor Operator">∷</a> <a id="1232" href="/Quantitative/LinAlg/#1115" class="Function Operator">∥</a> <a id="1234" class="Symbol">(</a><a id="1235" href="/Quantitative/LinAlg/#1215" class="Bound">Δ</a> <a id="1237" href="https://agda.github.io/agda-stdlib/Function.html#769" class="Function Operator">∘</a> <a id="1239" href="/Quantitative/#1165" class="InductiveConstructor Operator">S_</a><a id="1241" class="Symbol">)</a> <a id="1243" href="/Quantitative/LinAlg/#1115" class="Function Operator">∥Mat</a></pre>
+
+  </div>
+
+  <p style="text-align:center;">
+    
+    
+    <a alt="Source code" href="https://github.com/plfa/plfa.github.io/blob/dev/src/plfa/Quantitative/LinAlg.lagda">Source</a>
+    
+    
+</p>
+
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Programming Language Foundations in Agda
+</h2><div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Philip Wadler</li>
+          <li><a class="u-email" href="mailto:wadler@inf.ed.ac.uk">wadler@inf.ed.ac.uk</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/wadler"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">wadler</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3"></div>
+    </div><div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Wen Kokke</li>
+          <li><a class="u-email" href="mailto:wen.kokke@ed.ac.uk">wen.kokke@ed.ac.uk</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/wenkokke"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">wenkokke</span></a></li><li><a href="https://www.twitter.com/wenkokke"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">wenkokke</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3"></div>
+    </div>This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>
+  </div>
+</footer>
+<!-- Import jQuery -->
+<script type="text/javascript" src="/assets/jquery.js"></script>
+
+<!-- Script which allows for foldable code blocks -->
+<script type="text/javascript">
+ $('div.foldable pre').each(function(){
+     var autoHeight = $(this).height();
+     var lineHeight = parseFloat($(this).css('line-height'));
+
+     var plus    = $("<div></div>");
+     var horLine = $("<div></div>");
+     var verLine = $("<div></div>");
+     $(this).prepend(plus);
+     plus.css({
+         'position'         : 'relative',
+         'float'            : 'right',
+         'right'            : '-' + (0.5 * lineHeight - 1.5) + 'px',
+         'width'            : lineHeight,
+         'height'           : lineHeight});
+     verLine.css({
+         'position'         : 'relative',
+         'height'           : lineHeight,
+         'width'            : '3px',
+         'background-color' : '#C1E0FF'});
+     horLine.css({
+         'position'         : 'relative',
+         'top'              : '-' + (0.5 * lineHeight + 1.5) + 'px',
+         'left'             : '-' + (0.5 * lineHeight - 1.5) + 'px',
+         'height'           : '3px',
+         'width'            : lineHeight,
+         'background-color' : '#C1E0FF'});
+     plus.append(verLine);
+     plus.append(horLine);
+
+     $(this).height(2.0 * lineHeight);
+     $(this).css('overflow','hidden');
+
+     $(this).click(function(){
+         if ($(this).height() == autoHeight) {
+             $(this).height(2.0 * lineHeight);
+             plus.show();
+         }
+         else {
+             $(this).height('auto');
+             plus.hide();
+         }
+     });
+ });
+</script>
+
+<!-- Import KaTeX -->
+<script type="text/javascript" src="/assets/katex.js"></script>
+
+<!-- Script which renders TeX using KaTeX -->
+<script type="text/javascript">
+ $("script[type='math/tex']").replaceWith(
+     function(){
+         var tex = $(this).text();
+         return "<span class=\"inline-equation\">" +
+                katex.renderToString(tex) +
+                "</span>";
+     });
+ $("script[type='math/tex; mode=display']").replaceWith(
+     function(){
+         var tex = $(this).text().replace(/%.*?(\n|$)/g,"");
+         return "<div class=\"equation\">" +
+                katex.renderToString("\\displaystyle "+tex) +
+                "</div>";
+     });
+</script>
+</body>
+
+</html>
